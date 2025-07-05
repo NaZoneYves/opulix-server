@@ -9,6 +9,17 @@ exports.createTransaction = async (req, res) => {
   }
 };
 
+exports.getAllTransactions = async (req, res) => {
+  try {
+    const transactions = await transactionService.getAllTransactions();
+    res.status(200).json(transactions);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Failed to fetch transactions", error: err.message });
+  }
+};
+
 exports.getTransactionByUser = async (req, res) => {
   try {
     const userId = req.params.userId;

@@ -39,6 +39,13 @@ exports.createTransaction = async (data) => {
   return transaction;
 };
 
+exports.getAllTransactions = async () => {
+  return await Transaction.find()
+    .populate("user", "username")
+    .populate("hotel", "name")
+    .populate("room", "title");
+};
+
 exports.getTransactionByUser = async (userId) => {
   const transactions = await Transaction.find({ user: userId })
     .populate("hotel")
