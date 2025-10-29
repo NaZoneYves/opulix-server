@@ -67,17 +67,9 @@ exports.getAvailableRooms = async (
   return availableRooms;
 };
 
-exports.createRoom = async (data, hotel = null) => {
+exports.createRoom = async (data) => {
   const room = new Room(data);
   const savedRoom = await room.save();
-
-  if (hotelId) {
-    const Hotel = require("../models/Hotel");
-    await Hotel.findByIdAndUpdate(hotelId, {
-      $push: { rooms: savedRoom._id },
-    });
-  }
-
   return savedRoom;
 };
 
@@ -86,7 +78,19 @@ exports.getAllRooms = async () => {
 };
 
 exports.updateRoom = async (id, data) => {
-  return await Room.findByIdAndUpdate(id, data, { new: true });
+  return await Room.findByIdAndUpdate(
+    id,
+    {
+      $set: {
+        title: data.title,
+        price: data.price,
+        maxPeople: data.maxPeople,
+        desc: data.desc,
+        roomNumbers: data.roomNumbers, // Ghi đè hoàn toàn mảng
+      },
+    },
+    { new: true }
+  );
 };
 
 exports.deleteRoom = async (roomId) => {

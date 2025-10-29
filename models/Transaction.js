@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const TransactionSchema = new mongoose.Schema(
   {
-    //List of booked rooms
+    // List of booked rooms
     room: [
       {
         roomId: {
@@ -48,6 +48,12 @@ const TransactionSchema = new mongoose.Schema(
       type: String,
       enum: ["Booked", "Checkin", "Checkout"],
       default: "Booked",
+    },
+
+    // 🧠 Thêm trường integrityHash để bảo đảm tính toàn vẹn
+    integrityHash: {
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }

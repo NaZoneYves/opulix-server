@@ -15,10 +15,10 @@ const updateExpiredTransactions = async () => {
 
   if (result.modifiedCount > 0) {
     console.log(
-      `🛏️ Auto Updated ${result.modifiedCount} transaction(s) to 'Checkout'`
+      `Auto Updated ${result.modifiedCount} transaction(s) to 'Checkout'`
     );
   } else {
-    console.log("🕐 No transactions to update today.");
+    console.log("No transactions to update today.");
   }
 };
 

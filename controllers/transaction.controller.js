@@ -12,21 +12,41 @@ exports.createTransaction = async (req, res) => {
 exports.getAllTransactions = async (req, res) => {
   try {
     const transactions = await transactionService.getAllTransactions();
-    res.status(200).json(transactions);
+    res.status(200).json({ success: true, data: transactions });
   } catch (err) {
     res
       .status(500)
-      .json({ message: "Failed to fetch transactions", error: err.message });
+      .json({
+        success: false,
+        message: "Failed to fetch transactions",
+        error: err.message,
+      });
   }
 };
 
 exports.getTransactionByUser = async (req, res) => {
   try {
-    const userId = req.params.userId;
-    const transactions = await transactionService.getTransactionByUser(userId);
-    res.status(200).json(transactions);
+    const transactions = await transactionService.getTransactionByUser(
+      req.params.userId
+    );
+    res.status(200).json({ success: true, data: transactions });
   } catch (error) {
-    console.error("❌ Error in getTransactionsByUser:", error.message);
-    res.status(500).json({ message: "Failed to fetch transactions for user." });
+    res
+      .status(500)
+      .json({
+        success: false,
+        message: "Failed to fetch transactions for user.",
+      });
+  }
+};
+
+exports.countTransactions = async (req, res) => {
+  try {
+    const count = await transactionService.countTransactions();
+    res.status(200).json({ success: true, count });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to count transactions" });
   }
 };
